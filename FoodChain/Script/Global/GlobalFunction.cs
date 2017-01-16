@@ -35,8 +35,19 @@ namespace FoodChain
             System.DateTime currentTime = new System.DateTime();
             currentTime = System.DateTime.Now;
             return currentTime.ToShortDateString();
-        } 
+        }
 
-
+        /// <summary>  
+        /// 获取成长随机数
+        /// </summary>  
+        /// <param></param>  
+        /// <returns></returns>  
+        public static double GetRandom()
+        {
+            double result = 0.0;
+            Random random = new Random();
+            result = random.Next(85, 105) / 100.0;
+            return result;
+        }
     }
 }

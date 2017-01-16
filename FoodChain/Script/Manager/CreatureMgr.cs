@@ -40,33 +40,42 @@ namespace FoodChain
         public void Have_A_Day(Creature var)
         {
             var.Get_Old();
+            //State = mature
             if (var.State == status.mature)
             {
+                if (var.Energy >= var.Energy_Max * 0.8)
+                    return;
                 Creature food = this.Find_Food(var);
                 if (food == null)
-                    var.AddHungry();
+                { }
                 else
                 {
                     var.Eat(food);
-                    GL_List_Creature.Remove(food);
-                    foreach (List<Creature> var_S in this.GL_List_Species)
-                    {
-                        foreach (Creature var_C in var_S)
-                        {
-                            if (var_C == food)
-                            {
-                                var_S.Remove(food);
-                                return;
-                            }
-                        }
-                    }
+                    food.State = status.death;
+                    //GL_List_Creature.Remove(food);
+                    //foreach (List<Creature> var_S in this.GL_List_Species)
+                    //{
+                    //    foreach (Creature var_C in var_S)
+                    //    {
+                    //        if (var_C == food)
+                    //        {
+                    //            var_S.Remove(food);
+                    //            return;
+                    //        }
+                    //    }
+                    //}
                 }
+            }
+            //State = childhood
+            else if (var.State == status.childhood)
+            {
+               
             }
         }
 
-        public Species Create_Species(string Id, int Hungry_Max, int Age_Max, int Growth_To_Grow, int Num_Max)
+        public Species Create_Species(string Id, double Hungry_Ratio, int Age_Max, int Growth_To_Grow, int Growth_To_Reproduce, int Num_Max, int Energy_Max, double Energy_Growth)
         {
-            Species var = new Species(Id, Hungry_Max, Age_Max, Growth_To_Grow, Num_Max);
+            Species var = new Species(Id, Hungry_Ratio, Age_Max, Growth_To_Grow, Growth_To_Reproduce, Num_Max, Energy_Max, Energy_Growth);
             return var;
         }
 
