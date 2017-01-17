@@ -65,7 +65,7 @@ namespace FoodChain
             this.Energy_Growth = Energy_Growth;
         }
 
-        public bool EatAble (Creature food)
+        public bool EatAble(Creature food)
         {
             //if (this.FoodList.Contains((Species)food))
             //    return true;
@@ -79,6 +79,22 @@ namespace FoodChain
                     return true;
             }
             return false;
+        }
+
+        public bool Generative(int totalNum)
+        {
+            if ((this.Num_Max * 2 - totalNum) <= 0)
+                return false;
+            else if (this.Num_Max > totalNum)
+                return true;
+            else
+            {
+                Random random = new Random();
+                if (totalNum <= random.Next(this.Num_Max, this.Num_Max * 2))
+                    return true;
+                else
+                    return false;
+            }
         }
     }
 }

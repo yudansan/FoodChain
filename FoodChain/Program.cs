@@ -22,9 +22,9 @@ namespace FoodChain
             int i = times;
 
             //Add Species
-            Species S_Wolf = new Species("Wolf", 0.01, 200, 50, 80, 200, 10, 0.015);
-            Species S_Sheep = new Species("Sheep", 0.012, 120, 30, 70, 200, 8, 0.015);
-            Species S_Grass = new Species("Grass", 0, 100, 30, 20, 200, 6, 0.03);
+            Species S_Wolf = new Species("Wolf", 0.01, 200, 50, 80, 100, 10, 0.015);
+            Species S_Sheep = new Species("Sheep", 0.012, 120, 30, 70, 100, 8, 0.015);
+            Species S_Grass = new Species("Grass", 0, 100, 30, 20, 100, 6, 0.03);
 
             //Init Foodchain
             S_Wolf.FoodList.Add(S_Sheep);
@@ -34,8 +34,8 @@ namespace FoodChain
 
             //Add Creature
             GL_Mgr.Create_Species_By_Num(S_Wolf, 1);
-            GL_Mgr.Create_Species_By_Num(S_Sheep, 40);
-            GL_Mgr.Create_Species_By_Num(S_Grass, 120);
+            GL_Mgr.Create_Species_By_Num(S_Sheep, 10);
+            GL_Mgr.Create_Species_By_Num(S_Grass, 80);
             //Init log
             Debug_Log_Init(GL_Mgr);
 
@@ -56,7 +56,7 @@ namespace FoodChain
                             continue;
                         }
                         //Who is to have a baby
-                        if ((var_S.Count + List_Birth.Count) < var_C.Num_Max && var_C.Maturity && var_C.Energy >= var_C.Energy_Max * 0.8)
+                        if (var_C.Generative(List_Birth.Count + var_S.Count) && var_C.Maturity && var_C.Energy >= var_C.Energy_Max * 0.8)
                             List_Birth.Add(var_C.Give_Birth());
                     }
                     //Remove who is dead
@@ -85,15 +85,16 @@ namespace FoodChain
                     string Line_W = "var wolfData = [";
                     string Line_S = "var sheepData = [";
                     string Line_G = "var grassData = [";
-                    int localTimes = (times - i);
+                    int localTimes = (times - i) / 10;
 
                     while (localTimes > 0)
                     {
                         Line_L += localTimes.ToString() + ",";
-                        Line_W += Log_Species[0][(localTimes) -1] + ",";
-                        Line_S += Log_Species[1][(localTimes) -1] + ",";
-                        Line_G += Log_Species[2][(localTimes) -1] + ",";
-                        localTimes -= (times - i) / 10;
+                        Line_W += Log_Species[0][(localTimes) * 10 -1] + ",";
+                        Line_S += Log_Species[1][(localTimes) * 10 -1] + ",";
+                        Line_G += Log_Species[2][(localTimes) * 10 -1] + ",";
+                        //localTimes -= (times - i) / 10;
+                        localTimes -= 1;
                     }
                     Line_L += "]\n";
                     Line_W += "]\n";

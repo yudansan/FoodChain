@@ -52,18 +52,6 @@ namespace FoodChain
                 {
                     var.Eat(food);
                     food.State = status.death;
-                    //GL_List_Creature.Remove(food);
-                    //foreach (List<Creature> var_S in this.GL_List_Species)
-                    //{
-                    //    foreach (Creature var_C in var_S)
-                    //    {
-                    //        if (var_C == food)
-                    //        {
-                    //            var_S.Remove(food);
-                    //            return;
-                    //        }
-                    //    }
-                    //}
                 }
             }
             //State = childhood
